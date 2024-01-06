@@ -18,7 +18,6 @@ with open(csvpath) as csvfile:
 
     # Skip the header row and store it in a list
     csv_header = next(budget_csv)
-    headers_list = list(csv_header)
 
     # Convert each column to lists and find sum of profits/losses
     for row in budget_csv:
