@@ -36,8 +36,16 @@ with open(csvpath) as csvfile:
     # Calculate the average change
     average_change = sum(changes)/len(changes)
 
+    # Find the greatest increase (best) and greatest decrease (worst) in profits
+    grt_increase = max(changes)
+    best_index = changes.index(grt_increase)
+    best_date = dates[best_index+1] # add a row to the index because we skipped a row in 'changes'
+
+    grt_decrease = min(changes)
+    worst_index = changes.index(grt_decrease)
+    worst_date = dates[worst_index+1]
+
     # Print the Financial Analysis
-    print(csv_header)
     print(f"""
     Financial Analysis
           
@@ -49,7 +57,7 @@ with open(csvpath) as csvfile:
 
     Average Change: ${round(average_change, 2)}
 
-    Greatest Increase in Profits: ()
+    Greatest Increase in Profits: {best_date} (${grt_increase})
 
-    Greatest Decrease in Profits: ()
+    Greatest Decrease in Profits: {worst_date} (${grt_decrease})
           """)
