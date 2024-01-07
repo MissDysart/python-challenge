@@ -1,6 +1,7 @@
 #Import the Modules we need
 import os
 import csv
+import sys
 
 csvpath = os.path.join('Resources', 'budget_data.csv')
 
@@ -26,6 +27,7 @@ with open(csvpath) as csvfile:
         dates.append(row[0])
         PnL.append(row[1])
 
+    # Calculate the changes in profits and losses from month to month (Xpert LA)
     for i in range(len(PnL)):
         if i == 0:
             continue
@@ -45,8 +47,8 @@ with open(csvpath) as csvfile:
     worst_index = changes.index(grt_decrease)
     worst_date = dates[worst_index+1]
 
-    # Print the Financial Analysis
-    print(f"""
+# Print the Financial Analysis to terminal
+    print(f'''
     Financial Analysis
           
     -------------------------------
@@ -60,4 +62,32 @@ with open(csvpath) as csvfile:
     Greatest Increase in Profits: {best_date} (${grt_increase})
 
     Greatest Decrease in Profits: {worst_date} (${grt_decrease})
-          """)
+          ''')
+
+# Create a file and print the Financial Analysis to it
+file = os.path.join('analysis', 'financial_analysis.txt')
+
+# Open/create file in write mode
+with open(file, 'w') as file:
+    # Redirect the standard output to text file (cr: Xpert LA)
+    sys.stdout = file
+
+    # Print to txt file
+    print(f'''
+    Financial Analysis
+          
+    -------------------------------
+          
+    Total months: {str(len(dates))}
+    
+    Total: ${str(total)}
+
+    Average Change: ${round(average_change, 2)}
+
+    Greatest Increase in Profits: {best_date} (${grt_increase})
+
+    Greatest Decrease in Profits: {worst_date} (${grt_decrease})
+    ''')
+    
+    # Restore standard output
+    sys.stdout = sys.__stdout__
