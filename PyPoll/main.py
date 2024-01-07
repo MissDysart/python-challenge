@@ -7,7 +7,6 @@ csvpath = os.path.join('Resources', 'election_data.csv')
 
 # Put the data from "columns" into lists and declare any variables will use
 ballots = []
-counties = []
 choice = []
 vote_count = {}
 
@@ -22,7 +21,6 @@ with open(csvpath) as csvfile:
     # Add ballots, counties, and choice to lists
     for row in election_csv:
         ballots.append(row[0])
-        counties.append(row[1])
         choice.append(row[2])
 
     # Find the total number of votes
@@ -71,14 +69,14 @@ with open(file, 'w') as file:
     sys.stdout = file
 
     # Print to txt file
-    print(f"""
-Election Results
+    print(f"""Election Results
       
 -------------------------------
       
 Total votes: {total_votes}
 
--------------------------------""")
+-------------------------------
+""")
     for candidate, count in vote_count.items():
         percentage = round(count/total_votes * 100, 3)
         print(f'{candidate}: {percentage}% ({count})\n')
